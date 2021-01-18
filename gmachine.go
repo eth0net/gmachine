@@ -17,3 +17,10 @@ func New() *Machine {
 		Memory: make([]uint64, DefaultMemSize),
 	}
 }
+
+// Run executes the operations in memory starting from the point indicated by
+// the Program Counter, returning on execution termination or on reaching the
+// end of memory.
+func (m *Machine) Run() {
+	m.P++
+}
