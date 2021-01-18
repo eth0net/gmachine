@@ -5,6 +5,12 @@ package gmachine
 // allocated to a new G-machine by default.
 const DefaultMemSize = 1024
 
+// Opcodes for gmachines.
+const (
+	OpHALT uint64 = iota
+	OpNOOP
+)
+
 // Machine stores the details of a virtual CPU, gmachine.
 type Machine struct {
 	P      uint64
@@ -22,5 +28,11 @@ func New() *Machine {
 // the Program Counter, returning on execution termination or on reaching the
 // end of memory.
 func (m *Machine) Run() {
-	m.P++
+	for {
+		op := m.Memory[m.P]
+		m.P++
+		if op == OpHALT {
+			return
+		}
+	}
 }
