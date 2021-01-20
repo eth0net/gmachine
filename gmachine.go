@@ -9,11 +9,13 @@ const DefaultMemSize = 1024
 const (
 	OpHALT uint64 = iota
 	OpNOOP
+	OpINCA
+	OpDECA
 )
 
 // Machine stores the details of a virtual CPU, gmachine.
 type Machine struct {
-	P      uint64
+	A, P   uint64
 	Memory []uint64
 }
 
@@ -31,8 +33,13 @@ func (m *Machine) Run() {
 	for {
 		op := m.Memory[m.P]
 		m.P++
-		if op == OpHALT {
+		switch op {
+		case OpHALT:
 			return
+		case OpINCA:
+			m.A++
+		case OpDECA:
+			m.A--
 		}
 	}
 }
